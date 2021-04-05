@@ -17,4 +17,5 @@
 {% block body %}
     <h2 class="intro__suptitle">Welcome to</h2>
     <h1 class="intro__title">temp</h1>
+    <h1 class="intro__title">Hello, {% if not user.is_authenticated %}ANON{% else %}{{ user.username }}{% endif %}</h1>
 {% endblock %}

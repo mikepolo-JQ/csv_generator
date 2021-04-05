@@ -17,12 +17,15 @@ pytest-selenium = "*"
 [packages]
 atomicwrites = "*"
 django = "*"
-dynaconf = { extras = ["yaml"], version = "*" }
+dynaconf = "==3.1.2"
 gunicorn = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
 dj-database-url = "*"
 sentry-sdk = "*"
+isort = "*"
+black = "*"
+extras = "*"
 
 [requires]
 python_version = "3.9"

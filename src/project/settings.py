@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from django.urls import reverse_lazy
 from dynaconf import settings as _ds
 
 DIR_SRC = Path(__file__).resolve().parent.parent
@@ -29,7 +30,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # -------------------------------------
-    "applications.main.apps.LandingConfig",
+    "applications.landing.apps.LandingConfig",
+    "applications.onboarding.apps.OnboardingConfig",
 ]
 
 MIDDLEWARE = [
@@ -67,12 +69,9 @@ WSGI_APPLICATION = "project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": DIR_SRC / "db.sqlite3",
-    }
-}
+database_url = os.getenv("DATABASE_URL", _ds.DATABASE_URL)
+
+DATABASES = {"default": dj_database_url.parse(database_url)}
 
 
 # Password validation
@@ -121,3 +120,9 @@ STATICFILES_DIRS = [
 
 if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+if DEBUG:
+    AUTH_PASSWORD_VALIDATORS = []
+
+LOGIN_URL = reverse_lazy("onboarding:sign-in")
+LOGIN_REDIRECT_URL = "/"

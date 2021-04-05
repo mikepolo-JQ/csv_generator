@@ -1,0 +1,187 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("/static/fonts/Montserrat.ttf");
+}
+
+@font-face {
+  font-family: "Kaushan Script";
+  src: url("/static/fonts/KaushanScript.ttf");
+}
+
+body{
+    color: #333
+}
+
+/* intro */
+.intro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.intro_signed-out{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+/* ONBOARDING PAGE */
+
+.container_form{
+    width: 100%;
+    max-width: 250px;
+    margin: 0;
+}
+
+.sign_title{
+    font-size: 3em;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+    font-family: "Kaushan Script", sans-serif;
+
+    line-height: 1;
+}
+
+
+label{
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input{
+    /*background-color: #262835;*/
+    color: #262835;
+    width: 100%;
+    font-size: 20px;
+
+    padding: 5px 12px;
+
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid black;
+    border-radius: 20px;
+}
+
+button{
+    margin: 0 auto;
+
+    color: black;
+    background: transparent;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+
+
+    width: 140px;
+    padding: 5px 5px;
+    box-sizing: border-box;
+    border: 3px solid black;
+    border-radius: 4px;
+
+    transition: background .1s linear,
+    color .1s linear;
+}
+
+button:hover{
+    background-color: black;
+    color: white;
+}
+
+/* SIGN UP */
+
+#id_sign_in_submit{
+    width: 100%;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+#sign_up_button{
+    background-color: #333545;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+
+    width: 100%;
+    max-width: 800px;
+    padding: 5px 5px;
+    box-sizing: border-box;
+    border: 3px solid #333545;
+    border-radius: 10px;
+
+    transition: background .1s linear,
+    color .1s linear;
+}
+
+.form-field{
+    margin-bottom: 10px;
+}
+
+.container_form{
+    justify-self: left;
+    margin-left: 20px;
+
+}
+
+.container_form-up{
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.inner_login{
+    background-color: black;
+    padding: 5px 40px 30px;
+    border-radius: 20px;
+
+    width: max-content;
+    margin: 0 auto;
+}
+
+.login_title{
+    color: white;
+}
+
+#id_sign_in_form label{
+    color: white;
+}
+
+#id_sign_in_submit{
+    border-color: white;
+    color: white;
+}
+
+#id_sign_in_submit:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.signup__inner{
+    background-color: black;
+    width: max-content;
+    margin: 0 auto;
+    padding: 30px 40px;
+
+    border-radius: 20px;
+}
+
+.form-field label{
+    color: white;
+}
+
+.signup__inner .sign_title{
+    color: white;
+}

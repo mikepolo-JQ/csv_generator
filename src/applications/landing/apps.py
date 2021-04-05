@@ -2,6 +2,5 @@ from django.apps import AppConfig
 
 
 class LandingConfig(AppConfig):
-    # name = 'main'
-    lable = "main"
+    lable = "landing"
     name = f"applications.{lable}"

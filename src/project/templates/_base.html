@@ -2,13 +2,45 @@
 
 <!DOCTYPE html>
     <html>
-    <head>
-        <title>temp</title>
+    <head lang="ru">
+
         <meta charset="utf-8">
+
+        <link rel="stylesheet" href="
+        {% static 'styles/base_styles.css' %}">
+
         {% block head %}{% endblock %}
 
+        <link href="https://fonts.googleapis.com/css2?
+        family=Kaushan+Script&family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet">
     </head>
     <body>
+
+    <!-- HEADER ------------------------------------------->
+        <div class="header">
+            <div class="container">
+                <div class="header__inner">
+                    <a href="/" class="header__logo">CSV generator</a>
+
+                    <nav class="nav">
+                        <a href="#" class="nav__item">About</a>
+                    </nav>
+
+                    {% if not user.is_authenticated %}
+                        <span class="span_nav_sign">
+                            <a class="nav_sign" href="{% url "onboarding:sign-in" %}">Log In</a>
+                        </span>
+                    {% else %}
+                        <span class="header__user">Hello, {{ user.username }}</span>
+                        <span class="span_nav_sign">
+                            <a class="nav_sign" href="{% url "onboarding:sign-out" %}">Sign Out</a>
+                        </span>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div><!-- END HEADER ---------------------------------->
 
         {% block body %}{% endblock %}
 
