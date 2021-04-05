@@ -4,7 +4,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-black = "==20.8b1"
 colorama = "*"
 httpie = "*"
 ipython = "*"
@@ -24,8 +23,7 @@ whitenoise = "*"
 dj-database-url = "*"
 sentry-sdk = "*"
 isort = "*"
-black = "*"
-extras = "*"
+black = "==20.8b1"
 
 [requires]
 python_version = "3.9"

@@ -40,6 +40,6 @@ ci:
 
 
 heroku:
-  HOST: ".herokuapp.com"
+  HOST: "my-csv.herokuapp.com"
   MODE_DEBUG: false
   VENV_SYNTHETIC: true
