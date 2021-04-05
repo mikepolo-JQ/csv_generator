@@ -15,15 +15,15 @@ pytest-selenium = "*"
 
 [packages]
 atomicwrites = "*"
+black = "==20.8b1"
+dj-database-url = "*"
 django = "*"
 dynaconf = "==3.1.2"
 gunicorn = "*"
-psycopg2-binary = "*"
-whitenoise = "*"
-dj-database-url = "*"
-sentry-sdk = "*"
 isort = "*"
-black = "==20.8b1"
+psycopg2-binary = "*"
+sentry-sdk = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.9"
