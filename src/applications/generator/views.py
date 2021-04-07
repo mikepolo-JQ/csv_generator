@@ -1,12 +1,12 @@
 import json
-from cgi import parse_multipart, parse
-from urllib.parse import parse_qs
-
+import csv
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView
+
+from applications.generator.utils import get_data, get_columns_values
 
 
 class CreateView(TemplateView):
@@ -16,17 +16,28 @@ class CreateView(TemplateView):
 class GeneratorView(View):
     def post(self, request, *args, **kwargs):
 
-        body = request.environ.get("wsgi.input")
-        length = int(request.environ.get("CONTENT_LENGTH") or 0)
+        data = get_data(request.environ)
 
-        if not length:
-            return b""
+        filename = data['name'] + ".csv"
+        char = data['char']
+        sep = data['sep']
+        columns = data['columns']
+        columns.sort(key=lambda i: i['order'])
 
-        content = body.read(length).decode()
+        rows = get_columns_values(columns)
 
-        b = json.loads(content)
+        with open(filename, 'w', newline='') as fp:
+            fieldnames = []
 
-        print(b)
+            for column in columns:
+                fieldnames.append(column["name"])
+
+            writer = csv.DictWriter(fp, delimiter=sep, quotechar=char, fieldnames=fieldnames)
+
+            writer.writeheader()
+
+            for row in rows:
+                writer.writerow(row)
 
         payload = {"ok": True, "data": None}
         return JsonResponse(payload)
