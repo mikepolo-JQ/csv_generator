@@ -1,14 +1,71 @@
 
 $(document).ready(function (){
 
+    $("#submit_but").on("click", function (e){
+        let name = $("#id_schema_name").val();
+        let sep = $("#id_column_sep").val();
+        let character = $("#id_character").val();
+
+        let data = {};
+        data['name'] = name;
+        data['sep'] = sep;
+        data['char'] = character;
+
+
+        let child = $("#columns").children();
+
+        let columnName = "";
+        let columnType = "";
+        let columnFrom = 0;
+        let columnTo = 0;
+        let columnOrder = 0;
+        let columns = [];
+
+        for(let i = 0; i < child.length; ++i){
+            columnName = child[i].querySelector(".column__info input").value;
+            columnType = child[i].querySelector(".column__info select").value;
+            columnFrom = child[i].querySelector("#input_from").value;
+            columnTo = child[i].querySelector("#input_to").value;
+            columnOrder = child[i].querySelector("#order_input").value;
+            let column = {};
+
+            column["name"] = columnName;
+            column["type"] = columnType;
+            column["order"] = columnOrder;
+            if(columnType==="int"){
+                column["from"] = columnFrom;
+                column["to"] = columnTo;
+            }
+            columns.push(column);
+
+        }
+
+        data['columns'] = columns;
+        let json = JSON.stringify(data);
+        console.log(json);
+
+        let xhr = new XMLHttpRequest();
+        let url = "/g/s/";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(json);
+        xhr.onreadystatechange = function () {
+            if (xhr.status === 200) {
+                location.href = "/";
+            }
+        };
+
+
+    });
+
     let i = 1;
     $("#add_column_button").on("click", function (e){
         e.preventDefault();
 
         let selTypeVal = document.getElementById("select_" + i).value;
         let columnName = document.getElementById("column_name_input_"+i).value;
-        let fromVal = document.getElementById("range_from_" + i).lastElementChild.value;
-        let toVal = document.getElementById("range_to_" + i).lastElementChild.value;
+        let fromVal = document.getElementById("range_from_" + i).lastElementChild.value || 1;
+        let toVal = document.getElementById("range_to_" + i).lastElementChild.value || 100;
 
         console.log(fromVal + " = " + toVal);
 
@@ -85,8 +142,8 @@ let setActiveGrid = function (id, data){
         rangeFrom.classList.add("active_grid");
         rangeTo.classList.add("active_grid");
     }else{
-        rangeFrom.classList.remove("active_grid");
-        rangeTo.classList.remove("active_grid");
+        rangeFrom.classList.remove("active_grid") || console.log();
+        rangeTo.classList.remove("active_grid") || console.log();
     }
 }
 
@@ -101,7 +158,7 @@ let deleteColumn = function (elem){
 }
 
 let intRangeOpen = function (){
-    $('select').change(function(e){
+    $('select.sel').change(function(e){
 
         let data= $(this).val();
 
