@@ -1,3 +1,4 @@
+import csv
 import json
 import random
 import time
@@ -19,9 +20,15 @@ def get_data(environ):
 column_values = {
     "int": False,
     "job": ["Developer", "Teacher", "Driver", "Artist", "Astronaut"],
-    "name": ["Johnny Depp", "Al Pacino", "Robert De Niro", "Kevin Spacey", "Denzel Washington"],
+    "name": [
+        "Johnny Depp",
+        "Al Pacino",
+        "Robert De Niro",
+        "Kevin Spacey",
+        "Denzel Washington",
+    ],
     "company": ["Google", "Coca-cola", "Nike", "Adidas", "Ebay"],
-    "date": ["2020.01.03", "2015.06.14", "2010.04.23", "2017.05.07", "2021.04.08"]
+    "date": ["2020.01.03", "2015.06.14", "2010.04.23", "2017.05.07", "2021.04.08"],
 }
 
 
@@ -32,16 +39,42 @@ def get_columns_values(columns) -> list:
 
     for i in range(rows_count):
         for column in columns:
-            list_value = column_values[column['type']]
+            list_value = column_values[column["type"]]
 
             if not list_value:
-                value = random.randint(int(column['from']), int(column['to']))
+                value = random.randint(int(column["from"]), int(column["to"]))
             else:
                 value = random.choice(list_value)
 
-            column_dict[column['name']] = value
+            column_dict[column["name"]] = value
 
         result.append(column_dict)
         column_dict = {}
         # time.sleep(5)
     return result
+
+
+def generate_csv(data):
+    print("start")
+    filename = data["name"] + ".csv"
+    char = data["char"]
+    sep = data["sep"]
+    columns = data["columns"]
+    columns.sort(key=lambda i: i["order"])
+
+    rows = get_columns_values(columns)
+
+    with open(filename, "w", newline="") as fp:
+        fieldnames = []
+
+        for column in columns:
+            fieldnames.append(column["name"])
+
+        writer = csv.DictWriter(
+            fp, delimiter=sep, quotechar=char, fieldnames=fieldnames
+        )
+
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(row)
+        print("finish")

@@ -2,7 +2,8 @@ from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
 from applications.generator.apps import GeneratorConfig
-from applications.generator.views import CreateView, GeneratorView
+from applications.generator.views import CreateView
+from applications.generator.views import GeneratorView
 
 app_name = GeneratorConfig.lable
 

@@ -24,6 +24,10 @@ isort = "*"
 psycopg2-binary = "*"
 sentry-sdk = "*"
 whitenoise = "*"
+celery = "*"
+django-redis = "*"
+django-celery-beat = "*"
+django-celery-results = "*"
 
 [requires]
 python_version = "3.9"

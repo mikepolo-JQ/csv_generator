@@ -23,19 +23,14 @@ ALLOWED_HOSTS = [
 ]
 
 if not DEBUG:
-    # sentry_sdk.init(_ds.SENTRY_DSN, traces_sample_rate=1.0)
+
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
 
     sentry_sdk.init(
         dsn=_ds.SENTRY_DSN,
         integrations=[DjangoIntegration()],
-        # Set traces_sample_rate to 1.0 to capture 100%
-        # of transactions for performance monitoring.
-        # We recommend adjusting this value in production.
         traces_sample_rate=1.0,
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True,
     )
 
@@ -50,6 +45,9 @@ INSTALLED_APPS = [
     "applications.landing.apps.LandingConfig",
     "applications.onboarding.apps.OnboardingConfig",
     "applications.generator.apps.GeneratorConfig",
+    # -------------------------------------
+    "django_celery_beat",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -144,3 +142,19 @@ if DEBUG:
 
 LOGIN_URL = reverse_lazy("onboarding:sign-in")
 LOGIN_REDIRECT_URL = "/"
+
+
+# Redis and Celery
+
+CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+REDIS_HOST = "127.0.0.1"
+REDIS_PORT = "6379"
+CELERY_BROKER_URL = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
+CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
+CELERY_RESULT_BACKEND = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
