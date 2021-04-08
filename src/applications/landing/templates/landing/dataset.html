@@ -17,21 +17,22 @@
 {% block body %}
     <article class="intro">
         <article class="schemas_container">
-            <article class="page_logo">Schemas</article>
-            <span><a href="{% url "generator:create" %}" id="new_schema_link" class="button submit_but" type="submit">New schema</a></span>
+            <article class="page_logo">Data Set</article>
+            <span><form class="rows_form" method="post" action="#">
+                <label for="rows_input">Rows :</label>
+                <input id="rows_input" type="number" min="1">
+                <button class="button" type="submit">Generate</button>
+            </form></span>
 
             <article class="table_grid">
                 <article class="table_header_item">Title</article>
-                <article class="table_header_item">Modified</article>
+                <article class="table_header_item">Status</article>
                 <article class="table_header_item">Actions</article>
                 {% for schema in schemas %}
                     <article class="row_item schema_name">{{ schema.name }}</article>
-                    <article class="row_item schema_date">{{ schema.date|default:"2020.05.05" }}</article>
-                    <article class="row_item actions">
-                        <a class="edit" href="{% url "generator:edit" schema.pk %}">Edit schema</a>
-                        <form method="post" action="{% url "generator:delete" schema.pk %}">
-                            <button class="delete_but" type="submit">Delete</button>
-                        </form>
+                    <article class="row_item schema_date">STATUS</article>
+                    <article class="row_item">
+                        <a class="edit" href="{% url "generator:edit" schema.pk %}">Download</a>
                     </article>
                 {% endfor %}
             </article>

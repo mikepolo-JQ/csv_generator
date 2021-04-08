@@ -3,6 +3,9 @@ import json
 import random
 import time
 
+from applications.generator.models import Column
+from applications.generator.models import Schema
+
 
 def get_data(environ):
     body = environ.get("wsgi.input")
@@ -55,8 +58,8 @@ def get_columns_values(columns) -> list:
 
 
 def generate_csv(data):
-    print("start")
-    filename = data["name"] + ".csv"
+    schema_name = data["name"]
+    filename = schema_name + ".csv"
     char = data["char"]
     sep = data["sep"]
     columns = data["columns"]
@@ -77,4 +80,27 @@ def generate_csv(data):
         writer.writeheader()
         for row in rows:
             writer.writerow(row)
-        print("finish")
+
+
+def create_models(data, user):
+    schema_name = data["name"]
+    char = data["char"]
+    sep = data["sep"]
+    columns = data["columns"]
+
+    schema = Schema(name=schema_name, char=char, sep=sep, author_id=user.id)
+    schema.save()
+
+    for column in columns:
+        coltype = column["type"]
+
+        col = Column(
+            name=column["name"],
+            columntype=coltype,
+            schema=schema,
+            order=column["order"],
+        )
+        if coltype == "int":
+            col.intfrom = column["from"]
+            col.intto = column["to"]
+        col.save()

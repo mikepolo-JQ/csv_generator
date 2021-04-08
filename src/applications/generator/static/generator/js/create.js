@@ -2,63 +2,22 @@
 $(document).ready(function (){
 
     $("#submit_but").on("click", function (e){
-        let name = $("#id_schema_name").val();
-        let sep = $("#id_column_sep").val();
-        let character = $("#id_character").val();
 
-        let data = {};
-        data['name'] = name;
-        data['sep'] = sep;
-        data['char'] = character;
-
-
-        let child = $("#columns").children();
-
-        let columnName = "";
-        let columnType = "";
-        let columnFrom = 0;
-        let columnTo = 0;
-        let columnOrder = 0;
-        let columns = [];
-
-        for(let i = 0; i < child.length; ++i){
-            columnName = child[i].querySelector(".column__info input").value;
-            columnType = child[i].querySelector(".column__info select").value;
-            columnFrom = child[i].querySelector("#input_from").value;
-            columnTo = child[i].querySelector("#input_to").value;
-            columnOrder = child[i].querySelector("#order_input").value;
-            let column = {};
-
-            column["name"] = columnName;
-            column["type"] = columnType;
-            column["order"] = columnOrder;
-            if(columnType==="int"){
-                column["from"] = columnFrom;
-                column["to"] = columnTo;
-            }
-            columns.push(column);
-
-        }
-
-        data['columns'] = columns;
-        let json = JSON.stringify(data);
-        console.log(json);
-
-        let xhr = new XMLHttpRequest();
-        let url = "/g/s/";
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(json);
-        xhr.onreadystatechange = function () {
-            if (xhr.status === 200) {
-                location.href = "/";
-            }
-        };
-
-
+        let json = getJSON()
+        $.ajax({
+           type: "POST",
+           url: "/g/s/",
+           data: json,
+           success: function(data)
+           {
+               location.replace("/")
+           }
+         });
     });
 
-    let i = 1;
+    let i = JSON.parse(document.getElementById('next_number').textContent) || 1;
+    console.log("i = "+ i);
+
     $("#add_column_button").on("click", function (e){
         e.preventDefault();
 
@@ -73,7 +32,7 @@ $(document).ready(function (){
         let newСolumn =
            " <article class=\"wrapper\">" +
                 "<article class=\"wrapper_column\">"+
-                    "<label for=\"column_name_input_"+i+"\">Column name</label>" +
+                    "<label for=\"column_name_input_"+ i +"\">Column name</label>" +
 
                     "<article class=\"column__info ready_column\">" +
                         "<input id=\"column_name_input_" + i + "\" type=\"text\" name=\"column_name\" value='" + columnName + "'>" +
@@ -175,6 +134,50 @@ let smoothScroll = function (){
     $("html, body").animate({
         scrollTop: top
     }, 1000)
+}
+
+let getJSON = function (){
+    let name = $("#id_schema_name").val();
+    let sep = $("#id_column_sep").val();
+    let character = $("#id_character").val();
+
+    let data = {};
+    data['name'] = name;
+    data['sep'] = sep;
+    data['char'] = character;
+
+    let child = $("#columns").children();
+
+    let columnName = "";
+    let columnType = "";
+    let columnFrom = 0;
+    let columnTo = 0;
+    let columnOrder = 0;
+    let columns = [];
+
+    for(let i = 0; i < child.length; ++i){
+        columnName = child[i].querySelector(".column__info input").value;
+        columnType = child[i].querySelector(".column__info select").value;
+        columnFrom = child[i].querySelector("#input_from").value;
+        columnTo = child[i].querySelector("#input_to").value;
+        columnOrder = child[i].querySelector("#order_input").value;
+        let column = {};
+
+        column["name"] = columnName;
+        column["type"] = columnType;
+        column["order"] = columnOrder;
+        if(columnType==="int"){
+            column["from"] = columnFrom;
+            column["to"] = columnTo;
+        }
+        columns.push(column);
+
+    }
+
+    data['columns'] = columns;
+    let json = JSON.stringify(data);
+    console.log(json);
+    return json
 }
 
 intRangeOpen();

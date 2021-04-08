@@ -24,7 +24,8 @@
                     <a href="/" class="header__logo">CSV generator</a>
 
                     <nav class="nav">
-                        <a href="#" class="nav__item">About</a>
+                        <a href="{% url "landing:index" %}" class="nav__item">Schemas</a>
+                        <a href="{% url "landing:dataset" %}" class="nav__item">Data Set</a>
                     </nav>
 
                     {% if not user.is_authenticated %}
