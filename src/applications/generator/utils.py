@@ -3,8 +3,14 @@ import json
 import random
 import time
 
+import boto3
+
 from applications.generator.models import Column
 from applications.generator.models import Schema
+from django.conf import settings
+import logging
+import boto3
+from botocore.exceptions import ClientError
 
 
 def get_data(environ):
@@ -67,6 +73,8 @@ def generate_csv(data):
 
     rows = get_columns_values(columns)
 
+    BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
+    OBJECT_NAME = 'media/' + filename
     with open(filename, "w", newline="") as fp:
         fieldnames = []
 
@@ -80,6 +88,23 @@ def generate_csv(data):
         writer.writeheader()
         for row in rows:
             writer.writerow(row)
+    res = upload_file(file_name=filename, bucket=BUCKET_NAME, object_name=OBJECT_NAME)
+    if res:
+        print("Ready")
+
+
+def upload_file(file_name, bucket, object_name=None):
+
+    if object_name is None:
+        object_name = file_name
+
+    s3_client = boto3.client('s3')
+    try:
+        response = s3_client.upload_file(file_name, bucket, object_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True
 
 
 def create_models(data, user):

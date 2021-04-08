@@ -15,7 +15,7 @@ $(document).ready(function (){
          });
     });
 
-    let i = JSON.parse(document.getElementById('next_number').textContent) || 1;
+    let i = JSON.parse(document.getElementById('next_number').textContent);
     console.log("i = "+ i);
 
     $("#add_column_button").on("click", function (e){

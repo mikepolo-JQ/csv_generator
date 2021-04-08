@@ -32,7 +32,8 @@
                     <article class="row_item schema_name">{{ schema.name }}</article>
                     <article class="row_item schema_date">STATUS</article>
                     <article class="row_item">
-                        <a class="edit" href="{% url "generator:edit" schema.pk %}">Download</a>
+                        <form method="post" action="{% url "landing:download" %}">
+                        <button type="submit" class="edit">Download</button></form>
                     </article>
                 {% endfor %}
             </article>

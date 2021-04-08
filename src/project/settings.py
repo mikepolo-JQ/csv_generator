@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     # -------------------------------------
     "django_celery_beat",
     "django_celery_results",
+    # -------------------------------------
+    "storages"
 ]
 
 MIDDLEWARE = [
@@ -145,7 +147,6 @@ LOGIN_REDIRECT_URL = "/"
 
 
 # Redis and Celery
-
 CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
@@ -158,3 +159,34 @@ CELERY_RESULT_BACKEND = "redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
+
+
+# AWS
+AWS_ACCESS_KEY_ID = _ds.AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = _ds.AWS_SECRET_ACCESS_KEY
+AWS_STORAGE_BUCKET_NAME = _ds.AWS_STORAGE_BUCKET_NAME
+
+# AWS_S3_FILE_OVERWRITE = False
+# # AWS_DEFAULT_ACL = None
+#
+# # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+#
+#
+# # second chance
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+# AWS_DEFAULT_ACL = 'public-read'
+#
+# AWS_LOCATION = 'static'
+# # STATICFILES_DIRS = [
+# #     os.path.join(BASE_DIR, 'static'),
+# # ]
+# STATICFILES_DIRS = [
+#     DIR_PROJECT / "static",
+# ]
+#
+# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+# AWS_ACCEPT_CONTENT = ["application/xhtml"]
+# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'project.storage.MediaStore'
