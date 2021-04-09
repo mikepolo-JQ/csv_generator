@@ -154,8 +154,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 REDIS_HOST = "127.0.0.1"
 REDIS_PORT = "6379"
 
-# CELERY_BROKER_URL = os.environ.get('REDIS_URL', ("redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"))
-CELERY_BROKER_URL = 'redis://:p10c9fa04676b07d162097b98154b63f05d935f9d2938f935c0ff43086ad098e5@ec2-54-195-205-20.eu-west-1.compute.amazonaws.com:21490'
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', ("redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"))
 CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
 CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', ("redis://" + REDIS_HOST + ":" + REDIS_PORT + "/0"))
 CELERY_ACCEPT_CONTENT = ["application/json"]
