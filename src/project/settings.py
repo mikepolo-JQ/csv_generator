@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # -------------------------------------
     "applications.landing.apps.LandingConfig",
     "applications.onboarding.apps.OnboardingConfig",
+    "applications.generator.apps.GeneratorConfig",
 ]
 
 MIDDLEWARE = [

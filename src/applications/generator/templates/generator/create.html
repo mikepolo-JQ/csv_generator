@@ -1,0 +1,98 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block head %}
+<link type="image/x-icon" rel="shortcut icon" href="
+        {% static "icons/favicon.ico" %}">
+
+<link rel="stylesheet" href="
+        {% static "generator/styles/generator_styles.css" %}">
+
+<link href="https://fonts.googleapis.com/css2?
+        family=Kaushan+Script&family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+<article class="intro">
+    <article class="container">
+
+        <h1 class="title">New schema</h1>
+        <span><button id="submit_but" class="button submit_but" type="submit">Submit</button></span>
+
+        <article class="form_item">
+            <label for="id_schema_name">Name</label><br>
+            <input id="id_schema_name" name="schema_name" type="text" value="schemaName">
+        </article>
+
+        <article class="form_item">
+            <label for="id_column_sep">Column separator</label><br>
+            <select id="id_column_sep">
+                <option value=",">Comma (,)</option>
+                <option value=".">Point (.)</option>
+                <option value=";">Semicolon (;)</option>
+            </select>
+        </article>
+
+        <article class="form_item">
+            <label for="id_character">String character</label><br>
+            <select id="id_character">
+                <option value='"'>Double-quote (")</option>
+                <option value='""'>Two double-quotes ("")</option>
+                <option value='"""'>Three double-quotes (""")</option>
+            </select>
+        </article>
+
+        <h1 class="title">Schema columns</h1>
+
+        <article id="columns"></article>
+
+        <article class="form_item schema_columns column">
+            <article class="wrapper">
+                <article class="wrapper_column">
+                    <label for="column_name_input_1">Column name</label>
+
+                    <article class="column__info">
+                        <input id="column_name_input_1" type="text" name="column_name" value="colname">
+                        <select id="select_1" class="sel">
+                            <option value="">----</option>
+                            <option value="name">Full name</option>
+                            <option value="int">Integer</option>
+                            <option value="company">Company</option>
+                            <option value="job">Job</option>
+                            <option value="date">Date</option>
+                        </select>
+                    </article>
+                </article>
+
+                <article id="range_from_1" class="int_range">
+                    <label for="input_from">From</label>
+                    <input id="input_from" type="number" min="1" max="100">
+                </article>
+                <article id="range_to_1" class="int_range">
+                    <label for="input_to">To</label>
+                    <input id="input_to" type="number" min="1" max="100">
+                </article>
+
+{#                <article class="int_range active_grid">#}
+{#                    <lable for="order_input">Order</lable>#}
+{#                    <input id="order_input" type="number" min="1" max="1">#}
+{#                </article>#}
+{##}
+{#                <article id="delete_1" class="delete_but">Delete</article>#}
+
+            </article>
+
+            <button id="add_column_button" class="button" type="submit">Add column</button>
+
+        </article>
+
+
+    </article>
+</article>
+
+<script src="{% static "generator/js/jquery.js" %}"></script>
+<script src="{% static "generator/js/create.js" %}"></script>
+
+{% endblock %}
