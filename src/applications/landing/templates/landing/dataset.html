@@ -32,8 +32,8 @@
                     <article class="row_item schema_name">{{ schema.name }}</article>
                     <article id="status_{{ schema.pk }}" class="row_item status display_none">Waiting</article>
                     <article class="row_item">
-                        <form method="post" action="{% url "landing:download" schema.pk %}">
-                        <button type="submit" class="edit">Download</button></form>
+
+                        <a href="https://csv-generator-bucket.s3.eu-north-1.amazonaws.com/media/{{ schema.filename }}" type="submit" class="edit">Download</a>
                     </article>
                 {% endfor %}
             </article>

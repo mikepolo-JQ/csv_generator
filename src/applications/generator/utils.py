@@ -73,7 +73,7 @@ def upload_file(file_name):
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     )
     try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
+        response = s3_client.upload_file(file_name, bucket, object_name, ExtraArgs={'ACL': 'public-read'})
     except ClientError as e:
         logging.error(e)
         return False
