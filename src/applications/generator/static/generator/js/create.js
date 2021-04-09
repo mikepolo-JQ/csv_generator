@@ -4,19 +4,21 @@ $(document).ready(function (){
     $("#submit_but").on("click", function (e){
 
         let json = getJSON()
-        $.ajax({
-           type: "POST",
-           url: "/g/s/",
-           data: json,
-           success: function(data)
-           {
-               location.replace("/")
-           }
-         });
+        if(json) {
+            $.ajax({
+                type: "POST",
+                url: "/g/s/",
+                data: json,
+                success: function (data) {
+                    location.replace("/")
+                }
+            });
+        }else{
+            alert("Please, check the entered data!");
+        }
     });
 
     let i = JSON.parse(document.getElementById('next_number').textContent);
-    console.log("i = "+ i);
 
     $("#add_column_button").on("click", function (e){
         e.preventDefault();
@@ -25,9 +27,6 @@ $(document).ready(function (){
         let columnName = document.getElementById("column_name_input_"+i).value;
         let fromVal = document.getElementById("range_from_" + i).lastElementChild.value || 1;
         let toVal = document.getElementById("range_to_" + i).lastElementChild.value || 100;
-
-        console.log(fromVal + " = " + toVal);
-
 
         let newСolumn =
            " <article class=\"wrapper\">" +
@@ -101,8 +100,8 @@ let setActiveGrid = function (id, data){
         rangeFrom.classList.add("active_grid");
         rangeTo.classList.add("active_grid");
     }else{
-        rangeFrom.classList.remove("active_grid") || console.log();
-        rangeTo.classList.remove("active_grid") || console.log();
+        rangeFrom.classList.remove("active_grid");
+        rangeTo.classList.remove("active_grid");
     }
 }
 
@@ -163,10 +162,15 @@ let getJSON = function (){
         columnOrder = child[i].querySelector("#order_input").value;
         let column = {};
 
+        if(!columnType){
+            return false
+        }
+
         column["name"] = columnName;
         column["type"] = columnType;
         column["order"] = columnOrder;
         if(columnType==="int"){
+            if(columnTo < columnFrom){ return false }
             column["from"] = columnFrom;
             column["to"] = columnTo;
         }
@@ -176,7 +180,6 @@ let getJSON = function (){
 
     data['columns'] = columns;
     let json = JSON.stringify(data);
-    console.log(json);
     return json
 }
 

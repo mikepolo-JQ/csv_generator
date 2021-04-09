@@ -7,21 +7,24 @@ $(document).ready(
 
         let json = getJSON()
 
-        $.ajax({
-           type: "POST",
-           url: "/g/s/",
-           data: json,
-           success: function(data){
-               $.ajax({
-                   type: "POST",
-                   url: delete_url,
-                   data: "",
-                   success: function()
-                   {
-                       location.replace('/');
-                   }
-                 });
-           }
-         });
+        if(json){
+            $.ajax({
+                type: "POST",
+                url: "/g/s/",
+                data: json,
+                success: function (data) {
+                    $.ajax({
+                        type: "POST",
+                        url: delete_url,
+                        data: "",
+                        success: function () {
+                            location.replace('/');
+                        }
+                    });
+                }
+            });
+        }else{
+            alert("Please, check the entered data!");
+        }
     })
 );
