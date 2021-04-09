@@ -1,0 +1,131 @@
+.intro{
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: max-content;
+    background: white center no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.schemas_container{
+    width: 100%;
+    max-width: 70%;
+    margin: 120px auto 0;
+}
+
+.page_logo{
+    position: absolute;
+    top: 115px;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-left: 20px;
+}
+
+/* Buttons */
+.button{
+    margin-top: 10px;
+    color: #fff;
+    background-color: limegreen;
+    border: 2px solid green;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-family: "Montserrat", sans-serif;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: lawngreen;
+    border-color: mediumseagreen;
+}
+
+.submit_but{
+    position: absolute;
+    right: 15%;
+    top: 16%;
+    text-decoration: none;
+}
+
+.delete_but{
+    color: red;
+    text-decoration: none;
+
+    border: none;
+    background-color: transparent;
+    font-size: 1em;
+    cursor: pointer;
+}
+.delete_but:hover{
+    color: black;
+}
+/* END BUTTONS*/
+
+.table_grid{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+
+    grid-gap: 0.5em;
+    background-color: whitesmoke;
+    padding: 20px;
+
+    justify-items: center;
+}
+
+.table_header_item{
+    background-color: limegreen;
+    border: 2px solid green;
+    border-radius: 3px;
+    width: 100%;
+    text-align: center;
+
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 1.1em;
+}
+
+.actions form{
+    width: max-content;
+}
+
+.actions{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 60% 40%;
+}
+
+.actions a{
+    justify-self: center;
+}
+
+.edit{
+    text-decoration: none;
+    color: #00aaef;
+}
+.edit:hover{
+    color: black;
+}
+
+/*////////////// ROWS ////////////*/
+
+.rows_form{
+    position: absolute;
+    right: 20%;
+    top: 17%;
+}
+
+.rows_form input{
+    width: 50px;
+    margin: 0 10px 0;
+}
+
+.status{
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: red;
+}
+
+

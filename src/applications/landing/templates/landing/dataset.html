@@ -1,0 +1,47 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block head %}
+<link type="image/x-icon" rel="shortcut icon" href="
+        {% static "icons/favicon.ico" %}">
+
+<link rel="stylesheet" href="
+        {% static 'landing/styles/landing_styles.css' %}">
+
+<link href="https://fonts.googleapis.com/css2?
+        family=Kaushan+Script&family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+    <article class="intro">
+        <article class="schemas_container">
+            <article class="page_logo">Data Set</article>
+            <span class="rows_form">
+                <label for="rows_input">Rows :</label>
+                <input id="rows_input" type="number" min="1" value="1">
+                <button id="generate_but" class="button" type="submit">Generate</button>
+            </span>
+
+            <article class="table_grid">
+                <article class="table_header_item">Title</article>
+                <article class="table_header_item">Status</article>
+                <article class="table_header_item">Actions</article>
+                {% for schema in schemas %}
+                    <article class="row_item schema_name">{{ schema.name }}</article>
+                    <article id="status_{{ schema.pk }}" class="row_item status display_none">Waiting</article>
+                    <article class="row_item">
+
+                        <a href="https://csv-generator-bucket.s3.eu-north-1.amazonaws.com/media/{{ schema.filename }}" type="submit" class="edit">Download</a>
+                    </article>
+                {% endfor %}
+            </article>
+
+        </article>
+    </article>
+    <script id="start_url" class="{% url "landing:ss" %}"></script>
+
+    <script src="{% static "generator/js/jquery.js" %}"></script>
+    <script src="{% static "landing/js/dataset.js" %}"></script>
+{% endblock %}

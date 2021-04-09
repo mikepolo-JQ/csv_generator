@@ -23,7 +23,7 @@
 
         <article class="form_item">
             <label for="id_schema_name">Name</label><br>
-            <input id="id_schema_name" name="schema_name" type="text" value="schemaName">
+            <input id="id_schema_name" name="schema_name" type="text">
         </article>
 
         <article class="form_item">
@@ -39,8 +39,6 @@
             <label for="id_character">String character</label><br>
             <select id="id_character">
                 <option value='"'>Double-quote (")</option>
-                <option value='""'>Two double-quotes ("")</option>
-                <option value='"""'>Three double-quotes (""")</option>
             </select>
         </article>
 
@@ -54,7 +52,7 @@
                     <label for="column_name_input_1">Column name</label>
 
                     <article class="column__info">
-                        <input id="column_name_input_1" type="text" name="column_name" value="colname">
+                        <input id="column_name_input_1" type="text" name="column_name">
                         <select id="select_1" class="sel">
                             <option value="">----</option>
                             <option value="name">Full name</option>
@@ -91,7 +89,7 @@
 
     </article>
 </article>
-
+{{ 1|json_script:"next_number" }}
 <script src="{% static "generator/js/jquery.js" %}"></script>
 <script src="{% static "generator/js/create.js" %}"></script>
 
