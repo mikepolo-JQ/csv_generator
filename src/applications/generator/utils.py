@@ -1,16 +1,13 @@
-import csv
 import json
+import logging
 import random
-import time
 
 import boto3
+from botocore.exceptions import ClientError
+from django.conf import settings
 
 from applications.generator.models import Column
 from applications.generator.models import Schema
-from django.conf import settings
-import logging
-import boto3
-from botocore.exceptions import ClientError
 
 
 def get_data(environ):
@@ -41,10 +38,9 @@ column_values = {
 }
 
 
-def get_columns_values(columns) -> list:
+def get_rows(columns, rows_count) -> list:
     result = []
     column_dict = {}
-    rows_count = 3
 
     for i in range(rows_count):
         for column in columns:
@@ -63,42 +59,19 @@ def get_columns_values(columns) -> list:
     return result
 
 
-def generate_csv(data):
-    schema_name = data["name"]
-    filename = schema_name + ".csv"
-    char = data["char"]
-    sep = data["sep"]
-    columns = data["columns"]
-    columns.sort(key=lambda i: i["order"])
+def upload_file(file_name):
 
-    rows = get_columns_values(columns)
+    bucket = settings.AWS_STORAGE_BUCKET_NAME
+    object_name = "media/" + file_name
 
-    BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
-    OBJECT_NAME = 'media/' + filename
-    with open(filename, "w", newline="") as fp:
-        fieldnames = []
+    AWS_ACCESS_KEY_ID = settings.AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = settings.AWS_SECRET_ACCESS_KEY
 
-        for column in columns:
-            fieldnames.append(column["name"])
-
-        writer = csv.DictWriter(
-            fp, delimiter=sep, quotechar=char, fieldnames=fieldnames
-        )
-
-        writer.writeheader()
-        for row in rows:
-            writer.writerow(row)
-    res = upload_file(file_name=filename, bucket=BUCKET_NAME, object_name=OBJECT_NAME)
-    if res:
-        print("Ready")
-
-
-def upload_file(file_name, bucket, object_name=None):
-
-    if object_name is None:
-        object_name = file_name
-
-    s3_client = boto3.client('s3')
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    )
     try:
         response = s3_client.upload_file(file_name, bucket, object_name)
     except ClientError as e:
@@ -112,8 +85,11 @@ def create_models(data, user):
     char = data["char"]
     sep = data["sep"]
     columns = data["columns"]
+    filename = schema_name + ".csv"
 
-    schema = Schema(name=schema_name, char=char, sep=sep, author_id=user.id)
+    schema = Schema(
+        name=schema_name, char=char, sep=sep, author_id=user.id, filename=filename
+    )
     schema.save()
 
     for column in columns:
@@ -129,3 +105,21 @@ def create_models(data, user):
             col.intfrom = column["from"]
             col.intto = column["to"]
         col.save()
+
+
+def get_columns_data(schema_id):
+    schema = Schema.objects.filter(pk=schema_id).first()
+    columns = schema.columns.all()
+    columns_data = []
+
+    for column in columns:
+        columns_data.append(
+            {
+                "name": column.name,
+                "type": column.columntype,
+                "order": column.order,
+                "from": column.intfrom,
+                "to": column.intto,
+            }
+        )
+    return columns_data

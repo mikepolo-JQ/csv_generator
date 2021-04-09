@@ -18,11 +18,11 @@
     <article class="intro">
         <article class="schemas_container">
             <article class="page_logo">Data Set</article>
-            <span><form class="rows_form" method="post" action="#">
+            <span class="rows_form">
                 <label for="rows_input">Rows :</label>
-                <input id="rows_input" type="number" min="1">
-                <button class="button" type="submit">Generate</button>
-            </form></span>
+                <input id="rows_input" type="number" min="1" value="1">
+                <button id="generate_but" class="button" type="submit">Generate</button>
+            </span>
 
             <article class="table_grid">
                 <article class="table_header_item">Title</article>
@@ -30,9 +30,9 @@
                 <article class="table_header_item">Actions</article>
                 {% for schema in schemas %}
                     <article class="row_item schema_name">{{ schema.name }}</article>
-                    <article class="row_item schema_date">STATUS</article>
+                    <article id="status_{{ schema.pk }}" class="row_item status display_none">Waiting</article>
                     <article class="row_item">
-                        <form method="post" action="{% url "landing:download" %}">
+                        <form method="post" action="{% url "landing:download" schema.pk %}">
                         <button type="submit" class="edit">Download</button></form>
                     </article>
                 {% endfor %}
@@ -40,4 +40,8 @@
 
         </article>
     </article>
+    <script id="start_url" class="{% url "landing:ss" %}"></script>
+
+    <script src="{% static "generator/js/jquery.js" %}"></script>
+    <script src="{% static "landing/js/dataset.js" %}"></script>
 {% endblock %}

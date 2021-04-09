@@ -26,7 +26,7 @@
                 <article class="table_header_item">Actions</article>
                 {% for schema in schemas %}
                     <article class="row_item schema_name">{{ schema.name }}</article>
-                    <article class="row_item schema_date">{{ schema.date|default:"2020.05.05" }}</article>
+                    <article class="row_item schema_date">{{ schema.modified|default:"Today :)" }}</article>
                     <article class="row_item actions">
                         <a class="edit" href="{% url "generator:edit" schema.pk %}">Edit schema</a>
                         <form method="post" action="{% url "generator:delete" schema.pk %}">

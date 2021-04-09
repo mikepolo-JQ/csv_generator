@@ -8,6 +8,7 @@ from django.views.generic import ListView
 from django.views.generic import TemplateView
 
 from applications.generator.models import Schema
+from applications.landing.tasks import celery_file_download
 
 
 class IndexView(TemplateView):
@@ -36,13 +37,30 @@ class DataSetView(TemplateView):
 
 class DownloadView(View):
     def post(self, request, *args, **kwargs):
-        BUCKET_NAME = settings.AWS_STORAGE_BUCKET_NAME
-        env = os.environ
-        print(env)
-        s3 = boto3.client('s3',
-                          aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                          aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
-        s3.download_file(BUCKET_NAME, 'mediawelcom_to_AWS.csv', 'D:/downAWS/test_AWS.csv')
+
+        pk = kwargs["pk"]
+        filename = Schema.objects.filter(pk=pk).first().filename
+
+        celery_file_download.delay(filename)
+
         payload = {"ok": True, "data": None}
 
+        return JsonResponse(payload)
+
+
+class StartStatusView(View):
+    def post(self, request, *args, **kwargs):
+
+        user = self.request.user
+        schemas = Schema.objects.filter(author=user)
+
+        pks = []
+
+        for schema in schemas:
+            if not schema.status:
+                continue
+
+            pks.append(schema.pk)
+
+        payload = {"ok": True, "data": pks}
         return JsonResponse(payload)

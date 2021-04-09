@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -11,8 +13,10 @@ class Schema(models.Model):
     )
     sep = models.CharField(null=False, blank=False, max_length=10, default=",")
     char = models.CharField(null=False, blank=False, max_length=50, default='"')
+    status = models.BooleanField(default=False)
+    modified = models.DateTimeField(default=datetime.now)
 
-    filename = models.FileField()
+    filename = models.CharField(max_length=50, default="")
 
     def __str__(self):
         return f"{self.name}"

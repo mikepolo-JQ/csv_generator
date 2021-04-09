@@ -66,7 +66,7 @@
                         </select>
                     </article>
                 </article>
-                <span id='range_from_{{ column.order }}' class="int_range">
+                <span id='range_from_{{ column.order }}' class="int_range {% if column.columntype == "int" %}active_grid{% endif %}">
                     <label for="input_from">From</label>
                     <input id="input_from" type="number" min="1" max="100" value='{{ column.intfrom }}'>
                 </span>

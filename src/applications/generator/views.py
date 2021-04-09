@@ -15,14 +15,23 @@ class CreateView(TemplateView):
     template_name = "generator/create.html"
 
 
-class GeneratorView(View):
+class SchemasGeneratorView(View):
     def post(self, request, *args, **kwargs):
         data = get_data(request.environ)
         user = self.request.user
 
         create_models(data, user)
 
-        celery_generator_csv.delay(data)
+        payload = {"ok": True, "data": None}
+        return JsonResponse(payload)
+
+
+class CSVGeneratorView(View):
+    def post(self, request, *args, **kwargs):
+        user_id = self.request.user.id
+        rows = kwargs["rows"]
+
+        celery_generator_csv.delay(user_id, rows)
 
         payload = {"ok": True, "data": None}
         return JsonResponse(payload)
