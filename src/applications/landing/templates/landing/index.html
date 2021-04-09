@@ -39,4 +39,12 @@
 
         </article>
     </article>
+        {{ redirect|json_script:"redirect" }}
+    <script>
+        let ti = JSON.parse(document.getElementById('redirect').textContent);
+        console.log("ti = " + ti)
+        if(ti){
+            location.replace("/o/sign-in/")
+        }
+    </script>
 {% endblock %}
