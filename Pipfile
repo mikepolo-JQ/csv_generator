@@ -32,6 +32,7 @@ django-storages = "*"
 boto3 = "*"
 awscli = "*"
 redis = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.9"
